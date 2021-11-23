@@ -1,11 +1,11 @@
 monitor = peripheral.wrap("top")
 -- lvBatBox = peripheral.wrap("blockReader_0")
--- mvBatBox = peripheral.wrap("blockReader_1")
+mvBatBox = peripheral.wrap("blockReader_2")
 hvBatBox = peripheral.wrap("blockReader_0")
 -- evBatBox = peripheral.wrap("blockReader_3")
 
 -- lavaTank = peripheral.wrap("blockReader_4")
--- bioFuelTank = peripheral.wrap("blockReader_5")
+bioFuelTank = peripheral.wrap("blockReader_1")
 -- essenceTank = peripheral.wrap("blockReader_6")
 
 rsStorage = peripheral.wrap("rsBridge_1")
@@ -18,16 +18,16 @@ monitor.clear()
 monX, monY = monitor.getSize()
 print("MonX: " .. monX .. ", MonY: " .. monY)
 
-local tank1 = window.create(monitor, 4, 2, 15, 11)
-local tank2 = window.create(monitor, 28, 2, 15, 11)
-local tank3 = window.create(monitor, 52, 2, 15, 11)
+local tank1 = window.create(monitor, 7, 2, 15, 13)
+local tank2 = window.create(monitor, 29, 2, 15, 13)
+local tank3 = window.create(monitor, 52, 2, 15, 13)
 
-local lvWindow = window.create(monitor, 6, 19, 33, 5)
-local mvWindow = window.create(monitor, 42, 19, 33, 5)
-local hvWindow = window.create(monitor, 6, 25, 33, 5)
-local evWindow = window.create(monitor, 42, 25, 33, 5)
+local lvWindow = window.create(monitor, 6, 16, 28, 5)
+local mvWindow = window.create(monitor, 39, 16, 28, 5)
+local hvWindow = window.create(monitor, 6, 22, 28, 5)
+local evWindow = window.create(monitor, 39, 22, 28, 5)
 
-local storageWindow = window.create(monitor, 6, 32, 69, 5)
+local storageWindow = window.create(monitor, 6, 28, 61, 5)
 
 storageTable = {
     -- FTB:IC Energy Storage
@@ -70,20 +70,20 @@ function drawTank(window, tankName, x, y, color, maxLiq, currentLiq)
 
     percentage = roundNum(((currentLiq / maxLiq) * 100), 0)
 
-    for i = 0, 11 do
+    for i = 0, 9 do
         drawPixel(window, x, y + i, colors.white)
-        drawPixel(window, x + 18, y + i, colors.white)
+        drawPixel(window, x + 14, y + i, colors.white)
     end
 
-    for i = 1, 17 do
-        drawPixel(window, x + i, y + 11, colors.white)
+    for i = 1, 13 do
+        drawPixel(window, x + i, y + 9, colors.white)
     end
 
-    rows = roundNum((percentage / 10), 0)
+    rows = roundNum((percentage / 13), 0)
 
-    for i = 10 - rows, 10 do
-        for j = 1, 17 do
-            if tankName == "Lava Tank" then
+    for i = 8 - rows, 8 do
+        for j = 1, 13 do
+            if tankName == "Lava" then
                 if math.random(1, 20 - i) == 1 then
                     if math.random(1, 4) == 1 then
                         drawPixel(window, x + j, y + i, colors.black)
@@ -93,13 +93,13 @@ function drawTank(window, tankName, x, y, color, maxLiq, currentLiq)
                 else
                     drawPixel(window, x + j, y + i, color)
                 end
-            elseif tankName == "BioFuel Tank" then
+            elseif tankName == "BioFuel" then
                 if math.random(1, 20 - i) == 1 then
                     drawPixel(window, x + j, y + i, colors.magenta)
                 else
                     drawPixel(window, x + j, y + i, color)
                 end
-            elseif tankName == "Essence Tank" then
+            elseif tankName == "Essence" then
                 if math.random(1, 20 - i) == 1 then
                     drawPixel(window, x + j, y + i, colors.lime)
                 else
@@ -111,28 +111,28 @@ function drawTank(window, tankName, x, y, color, maxLiq, currentLiq)
         end
     end
 
-    window.setCursorPos(x, y + 12)
+    window.setCursorPos(x, y + 10)
     window.setBackgroundColor(monBG)
     window.clearLine()
-    window.setCursorPos(x, y + 13)
+    window.setCursorPos(x, y + 11)
     window.clearLine()
     window.setTextColor(colors.white)
-    window.write(tankName .. "  " .. tostring(percentage) .. "%")
-    window.setCursorPos(x, y + 14)
+    window.write(tankName .. " " .. tostring(percentage) .. "%")
+    window.setCursorPos(x, y + 12)
     window.clearLine()
-    window.write(tostring(shortenNum(currentLiq)) .. "mB / " .. tostring(shortenNum(maxLiq)) .. "mB")
+    window.write(tostring(shortenNum(currentLiq)) .. "/" .. tostring(shortenNum(maxLiq)) .. "")
 end
 
 function drawEnergy(window, name, unit, x, y, energyMax, energyCurrent)
     window.setBackgroundColor(winBG)
     window.clear()
     energyPercent = roundNum(((energyCurrent / energyMax) * 100), 0)
-    energyCols = roundNum((energyPercent / (10 / 3)), 0)
+    energyCols = roundNum((energyPercent / (10 / 2.5)), 0)
 
     drawPixel(window, x, y + 3, colors.white)
-    drawPixel(window, x + 32, y + 3, colors.white)
+    drawPixel(window, x + 27, y + 3, colors.white)
 
-    for i = 0, 32 do
+    for i = 0, 27 do
         drawPixel(window, x + i, y + 2, colors.white)
         drawPixel(window, x + i, y + 4, colors.white)
     end
@@ -156,19 +156,19 @@ function drawStorageSpace(window, name, x, y, storageMax, storageCurrent)
     window.setBackgroundColor(winBG)
     window.clear()
     storagePercent = roundNum(((storageCurrent / storageMax) * 100), 0)
-    storageCols = roundNum((storagePercent / (10 / 6.6)), 0)
-
+    storageCols = roundNum((storagePercent / (10 / 5.8)), 0)
+    
+    for i = 0, storageCols do
+        drawPixel(window, x + 1 + i, y + 3, colors.red)
+    end
     drawPixel(window, x, y + 3, colors.white)
-    drawPixel(window, x + 68, y + 3, colors.white)
+    drawPixel(window, x + 60, y + 3, colors.white)
 
     for i = 0, 68 do
         drawPixel(window, x + i, y + 2, colors.white)
         drawPixel(window, x + i, y + 4, colors.white)
     end
 
-    for i = 0, storageCols do
-        drawPixel(window, x + 1 + i, y + 3, colors.red)
-    end
 
     window.setCursorPos(x, y)
     window.setBackgroundColor(monBG)
@@ -211,47 +211,45 @@ function format_int(number)
 end
 
 function shortenNum(n)
-    if n >= 10^6 then
-        return string.format("%.2fM ", n / 10^6)
-    elseif n >= 10^3 then
-        return string.format("%.2fK ", n / 10^3)
+    if n >= 10 ^ 6 then
+        return string.format("%.2fM", n / 10 ^ 6)
+    elseif n >= 10 ^ 3 then
+        return string.format("%.2fK", n / 10 ^ 3)
     else
         return tostring(n)
     end
 end
 
-
 function renderLavaTank()
-    drawTank(tank1, "Lava Tank", 1, 1, colors.red, 100000,
-        351635)
+    drawTank(tank1, "Lava", 1, 1, colors.red, 100000, 90000)
 end
 -- function renderLavaTank()
 --     drawTank(tank1, "Lava Tank", 1, 1, colors.red, storageTable[lavaTank.getBlockData()["id"]],
 --         lavaTank.getBlockData()["tank"].Amount)
 -- end
 function renderBioFuelTank()
---     drawTank(tank2, "BioFuel Tank", 1, 1, colors.purple, storageTable[bioFuelTank.getBlockData()["id"]],
---         bioFuelTank.getBlockData()["tank"].Amount)
+        drawTank(tank2, "BioFuel", 1, 1, colors.purple, storageTable[bioFuelTank.getBlockData()["id"]],
+            bioFuelTank.getBlockData()["tank"].Amount)
 end
 function renderEssenceTank()
---     drawTank(tank3, "Essence Tank", 1, 1, colors.green, storageTable[essenceTank.getBlockData()["id"]],
---         essenceTank.getBlockData()["tank"].Amount)
+    --     drawTank(tank3, "Essence Tank", 1, 1, colors.green, storageTable[essenceTank.getBlockData()["id"]],
+    --         essenceTank.getBlockData()["tank"].Amount)
 end
 function renderLV()
 --     drawEnergy(lvWindow, "LV BatBox", "Z", 1, 1, storageTable[lvBatBox.getBlockData()["id"]],
 --         lvBatBox.getBlockData()["Energy"])
 end
 function renderMV()
---     drawEnergy(mvWindow, "MV BatBox", "Z", 1, 1, storageTable[mvBatBox.getBlockData()["id"]],
---         mvBatBox.getBlockData()["Energy"])
+        drawEnergy(mvWindow, "MV BatBox", "Z", 1, 1, storageTable[mvBatBox.getBlockData()["id"]],
+            mvBatBox.getBlockData()["Energy"])
 end
 function renderHV()
     drawEnergy(hvWindow, "HV BatBox", "Z", 1, 1, storageTable[hvBatBox.getBlockData()["id"]],
         hvBatBox.getBlockData()["Energy"])
 end
 function renderEV()
---     drawEnergy(evWindow, "EV BatBox", "Z", 1, 1, storageTable[evBatBox.getBlockData()["id"]],
---         evBatBox.getBlockData()["Energy"])
+    --     drawEnergy(evWindow, "EV BatBox", "Z", 1, 1, storageTable[evBatBox.getBlockData()["id"]],
+    --         evBatBox.getBlockData()["Energy"])
 end
 function renderStorage()
     drawStorageSpace(storageWindow, "RS Storage", 1, 1, rsStorage.getMaxItemDiskStorage(),
