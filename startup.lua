@@ -1,12 +1,17 @@
+local versionURL = "https://gaz492.github.io/ccMonitorScreen/version"
+local scriptURL = "https://gaz492.github.io/ccMonitorScreen/monitor.lua"
+
+local scriptFileName = "script" --do not add file type
+
 local isFirstRun = true
 
 function update()
     print("Updating software")
-    fs.delete("monitor.lua")
-    v = http.get("https://gaz492.github.io/ccMonitorScreen/version?t=" .. os.time())
-    s = http.get("https://gaz492.github.io/ccMonitorScreen/monitor.lua?t=" .. os.time())
+    fs.delete(scriptFileName .. ".lua")
+    v = http.get(versionURL .. "?t=" .. os.time())
+    s = http.get(scriptURL .. "?t=" .. os.time())
     fVersion = fs.open("version", "w")
-    fMonitor = fs.open("monitor.lua", "w")
+    fMonitor = fs.open(scriptFileName .. ".lua", "w")
     fVersion.write(v.readAll())
     v.close()
     fVersion.close()
@@ -18,7 +23,7 @@ end
 
 function checkVersion()
     print("Checking for newer version")
-    v = http.get("https://gaz492.github.io/ccMonitorScreen/version?t=" .. os.time())
+    v = http.get(versionURL .. "?t=" .. os.time())
     local currVersion
     if fs.exists("version") then
         fCV = fs.open("version", "r")
@@ -49,8 +54,8 @@ while true do
     if isFirstRun then
         isFirstRun = false
         _ = checkVersion()
-        if fs.exists("version") and fs.exists("monitor.lua") then
-            require("monitor")
+        if fs.exists("version") and fs.exists(scriptFileName .. ".lua") then
+            require(scriptFileName)
         else
             print("Failed to find script")
             break
