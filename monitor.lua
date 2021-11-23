@@ -177,7 +177,7 @@ function drawStorageSpace(window, name, x, y, storageMax, storageCurrent)
     window.write(name .. " " .. storagePercent .. "%")
     window.setCursorPos(x, y + 1)
     window.clearLine()
-    window.write(format_int(storageCurrent) .. " / " .. format_int(storageMax))
+    window.write(format_int(storageCurrent) .. " / " .. format_int(storageMax) .. " - " .. "Most popular item: " .. getTopStored(rsStorage.listItems()))
     window.setBackgroundColor(winBG)
 end
 
@@ -259,7 +259,4 @@ end
 function tick()
     parallel.waitForAll(renderLavaTank, renderBioFuelTank, renderEssenceTank, renderLV, renderMV, renderHV, renderEV,
         renderStorage)
-    monitor.setCursorPos(6, 38)
-    monitor.clearLine()
-    monitor.write("Most popular item: " .. getTopStored(rsStorage.listItems()))
 end
