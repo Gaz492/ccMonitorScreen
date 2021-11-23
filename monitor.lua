@@ -223,8 +223,12 @@ end
 
 
 function renderLavaTank()
---     drawTank(tank1, "Lava Tank", 1, 1, colors.red, storageTable[lavaTank.getBlockData()["id"]],
---         lavaTank.getBlockData()["tank"].Amount)
+    drawTank(tank1, "Lava Tank", 1, 1, colors.red, 100000,
+        351635)
+end
+function renderLavaTank()
+    drawTank(tank1, "Lava Tank", 1, 1, colors.red, storageTable[lavaTank.getBlockData()["id"]],
+        lavaTank.getBlockData()["tank"].Amount)
 end
 function renderBioFuelTank()
 --     drawTank(tank2, "BioFuel Tank", 1, 1, colors.purple, storageTable[bioFuelTank.getBlockData()["id"]],
