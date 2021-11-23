@@ -1,4 +1,3 @@
-local monitoring = {}
 monitor = peripheral.wrap("top")
 -- lvBatBox = peripheral.wrap("blockReader_0")
 -- mvBatBox = peripheral.wrap("blockReader_1")
@@ -226,10 +225,10 @@ function renderLavaTank()
     drawTank(tank1, "Lava Tank", 1, 1, colors.red, 100000,
         351635)
 end
-function renderLavaTank()
-    drawTank(tank1, "Lava Tank", 1, 1, colors.red, storageTable[lavaTank.getBlockData()["id"]],
-        lavaTank.getBlockData()["tank"].Amount)
-end
+-- function renderLavaTank()
+--     drawTank(tank1, "Lava Tank", 1, 1, colors.red, storageTable[lavaTank.getBlockData()["id"]],
+--         lavaTank.getBlockData()["tank"].Amount)
+-- end
 function renderBioFuelTank()
 --     drawTank(tank2, "BioFuel Tank", 1, 1, colors.purple, storageTable[bioFuelTank.getBlockData()["id"]],
 --         bioFuelTank.getBlockData()["tank"].Amount)
