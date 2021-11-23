@@ -1,3 +1,4 @@
+local monitoring = {}
 monitor = peripheral.wrap("top")
 -- lvBatBox = peripheral.wrap("blockReader_0")
 -- mvBatBox = peripheral.wrap("blockReader_1")
@@ -254,7 +255,7 @@ function renderStorage()
         tableLength(rsStorage.listItems()))
 end
 
-function init()
+function monitoring.init()
     while true do
         parallel.waitForAll(renderLavaTank, renderBioFuelTank, renderEssenceTank, renderLV, renderMV, renderHV, renderEV,
             renderStorage)
