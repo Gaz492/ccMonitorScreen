@@ -148,7 +148,7 @@ function drawEnergy(window, name, unit, x, y, energyMax, energyCurrent)
     window.write(name .. " " .. energyPercent .. "%")
     window.setCursorPos(x, y + 1)
     window.clearLine()
-    window.write(format_int(energyCurrent) .. unit .. " / " .. format_int(energyMax) .. unit)
+    window.write(roundNum(format_int(energyCurrent)) .. unit .. " / " .. roundNum(format_int(energyMax)) .. unit)
     window.setBackgroundColor(winBG)
 end
 
