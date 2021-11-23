@@ -1,6 +1,6 @@
 monitor = peripheral.wrap("top")
 -- batBox1 = peripheral.wrap("blockReader_0")
-batBox2 = peripheral.wrap("blockReader_2")
+batBox2 = peripheral.wrap("blockReader_3")
 batBox3 = peripheral.wrap("blockReader_0")
 -- batBox4 = peripheral.wrap("blockReader_3")
 
@@ -221,12 +221,9 @@ function shortenNum(n)
 end
 
 function renderLavaTank()
-    drawTank(tank1, "Lava", 1, 1, colors.red, 100000, 90000)
+    -- drawTank(tank1, "Lava Tank", 1, 1, colors.red, storageTable[lavaTank.getBlockData()["id"]],
+        -- lavaTank.getBlockData()["tank"].Amount)
 end
--- function renderLavaTank()
---     drawTank(tank1, "Lava Tank", 1, 1, colors.red, storageTable[lavaTank.getBlockData()["id"]],
---         lavaTank.getBlockData()["tank"].Amount)
--- end
 function renderBioFuelTank()
         drawTank(tank2, "BioFuel", 1, 1, colors.purple, storageTable[bioFuelTank.getBlockData()["id"]],
             bioFuelTank.getBlockData()["tank"].Amount)
@@ -240,11 +237,11 @@ function renderBB1()
 --         batBox1.getBlockData()["Energy"])
 end
 function renderBB2()
-        drawEnergy(mvWindow, "MV BatBox", "Z", 1, 1, storageTable[batBox2.getBlockData()["id"]],
+        drawEnergy(mvWindow, "HV BatBox", "Z", 1, 1, storageTable[batBox2.getBlockData()["id"]],
         batBox2.getBlockData()["Energy"])
 end
 function renderBB3()
-    drawEnergy(hvWindow, "HV BatBox", "Z", 1, 1, storageTable[batBox3.getBlockData()["id"]],
+    drawEnergy(hvWindow, "HV BatBox 2", "Z", 1, 1, storageTable[batBox3.getBlockData()["id"]],
     batBox3.getBlockData()["Energy"])
 end
 function renderBB4()
