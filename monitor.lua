@@ -255,14 +255,10 @@ function renderStorage()
         tableLength(rsStorage.listItems()))
 end
 
-function monitoring.init()
-    while true do
-        parallel.waitForAll(renderLavaTank, renderBioFuelTank, renderEssenceTank, renderLV, renderMV, renderHV, renderEV,
-            renderStorage)
-        monitor.setCursorPos(6, 38)
-        monitor.clearLine()
-        monitor.write("Most popular item: " .. getTopStored(rsStorage.listItems()))
-
-        sleep(1)
-    end
+function tick()
+    parallel.waitForAll(renderLavaTank, renderBioFuelTank, renderEssenceTank, renderLV, renderMV, renderHV, renderEV,
+        renderStorage)
+    monitor.setCursorPos(6, 38)
+    monitor.clearLine()
+    monitor.write("Most popular item: " .. getTopStored(rsStorage.listItems()))
 end
