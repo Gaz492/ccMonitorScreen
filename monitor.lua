@@ -1,8 +1,8 @@
 monitor = peripheral.wrap("top")
--- lvBatBox = peripheral.wrap("blockReader_0")
-mvBatBox = peripheral.wrap("blockReader_2")
-hvBatBox = peripheral.wrap("blockReader_0")
--- evBatBox = peripheral.wrap("blockReader_3")
+-- batBox1 = peripheral.wrap("blockReader_0")
+batBox2 = peripheral.wrap("blockReader_2")
+batBox3 = peripheral.wrap("blockReader_0")
+-- batBox4 = peripheral.wrap("blockReader_3")
 
 -- lavaTank = peripheral.wrap("blockReader_4")
 bioFuelTank = peripheral.wrap("blockReader_1")
@@ -235,21 +235,21 @@ function renderEssenceTank()
     --     drawTank(tank3, "Essence Tank", 1, 1, colors.green, storageTable[essenceTank.getBlockData()["id"]],
     --         essenceTank.getBlockData()["tank"].Amount)
 end
-function renderLV()
---     drawEnergy(lvWindow, "LV BatBox", "Z", 1, 1, storageTable[lvBatBox.getBlockData()["id"]],
---         lvBatBox.getBlockData()["Energy"])
+function renderBB1()
+--     drawEnergy(lvWindow, "LV BatBox", "Z", 1, 1, storageTable[batBox1.getBlockData()["id"]],
+--         batBox1.getBlockData()["Energy"])
 end
-function renderMV()
-        drawEnergy(mvWindow, "MV BatBox", "Z", 1, 1, storageTable[mvBatBox.getBlockData()["id"]],
-            mvBatBox.getBlockData()["Energy"])
+function renderBB2()
+        drawEnergy(mvWindow, "MV BatBox", "Z", 1, 1, storageTable[batBox2.getBlockData()["id"]],
+        batBox2.getBlockData()["Energy"])
 end
-function renderHV()
-    drawEnergy(hvWindow, "HV BatBox", "Z", 1, 1, storageTable[hvBatBox.getBlockData()["id"]],
-        hvBatBox.getBlockData()["Energy"])
+function renderBB3()
+    drawEnergy(hvWindow, "HV BatBox", "Z", 1, 1, storageTable[batBox3.getBlockData()["id"]],
+    batBox3.getBlockData()["Energy"])
 end
-function renderEV()
-    --     drawEnergy(evWindow, "EV BatBox", "Z", 1, 1, storageTable[evBatBox.getBlockData()["id"]],
-    --         evBatBox.getBlockData()["Energy"])
+function renderBB4()
+    --     drawEnergy(evWindow, "EV BatBox", "Z", 1, 1, storageTable[batBox4.getBlockData()["id"]],
+    --         batBox4.getBlockData()["Energy"])
 end
 function renderStorage()
     drawStorageSpace(storageWindow, "RS Storage", 1, 1, rsStorage.getMaxItemDiskStorage(),
@@ -257,6 +257,6 @@ function renderStorage()
 end
 
 function tick()
-    parallel.waitForAll(renderLavaTank, renderBioFuelTank, renderEssenceTank, renderLV, renderMV, renderHV, renderEV,
+    parallel.waitForAll(renderLavaTank, renderBioFuelTank, renderEssenceTank, renderBB1, renderBB2, renderBB3, renderBB4,
         renderStorage)
 end
