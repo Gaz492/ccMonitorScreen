@@ -19,9 +19,9 @@ monitor.clear()
 monX, monY = monitor.getSize()
 print("MonX: " .. monX .. ", MonY: " .. monY)
 
-local tank1 = window.create(monitor, 7, 2, 19, 15)
-local tank2 = window.create(monitor, 31, 2, 19, 15)
-local tank3 = window.create(monitor, 55, 2, 19, 15)
+local tank1 = window.create(monitor, 4, 2, 15, 11)
+local tank2 = window.create(monitor, 28, 2, 15, 11)
+local tank3 = window.create(monitor, 52, 2, 15, 11)
 
 local lvWindow = window.create(monitor, 6, 19, 33, 5)
 local mvWindow = window.create(monitor, 42, 19, 33, 5)
