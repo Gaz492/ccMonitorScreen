@@ -237,11 +237,11 @@ function renderBB1()
 --         batBox1.getBlockData()["Energy"])
 end
 function renderBB2()
-        drawEnergy(mvWindow, "HV BatBox", "Z", 1, 1, storageTable[batBox2.getBlockData()["id"]],
+        drawEnergy(mvWindow, "EV BatBox", "Z", 1, 1, storageTable[batBox2.getBlockData()["id"]],
         batBox2.getBlockData()["Energy"])
 end
 function renderBB3()
-    drawEnergy(hvWindow, "HV BatBox 2", "Z", 1, 1, storageTable[batBox3.getBlockData()["id"]],
+    drawEnergy(hvWindow, "EV BatBox 2", "Z", 1, 1, storageTable[batBox3.getBlockData()["id"]],
     batBox3.getBlockData()["Energy"])
 end
 function renderBB4()
