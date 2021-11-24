@@ -1,6 +1,6 @@
 monitor = peripheral.wrap("top")
--- batBox1 = peripheral.wrap("blockReader_0")
-batBox2 = peripheral.wrap("blockReader_3")
+batBox1 = peripheral.wrap("blockReader_4")
+batBox2 = peripheral.wrap("blockReader_5")
 batBox3 = peripheral.wrap("blockReader_0")
 -- batBox4 = peripheral.wrap("blockReader_3")
 
@@ -233,15 +233,15 @@ function renderEssenceTank()
     --         essenceTank.getBlockData()["tank"].Amount)
 end
 function renderBB1()
---     drawEnergy(lvWindow, "LV BatBox", "Z", 1, 1, storageTable[batBox1.getBlockData()["id"]],
---         batBox1.getBlockData()["Energy"])
+    drawEnergy(lvWindow, "EV BatBox S1", "Z", 1, 1, storageTable[batBox1.getBlockData()["id"]],
+        batBox1.getBlockData()["Energy"])
 end
 function renderBB2()
-        drawEnergy(mvWindow, "EV BatBox", "Z", 1, 1, storageTable[batBox2.getBlockData()["id"]],
+        drawEnergy(mvWindow, "EV BatBox S2", "Z", 1, 1, storageTable[batBox2.getBlockData()["id"]],
         batBox2.getBlockData()["Energy"])
 end
 function renderBB3()
-    drawEnergy(hvWindow, "EV BatBox 2", "Z", 1, 1, storageTable[batBox3.getBlockData()["id"]],
+    drawEnergy(hvWindow, "EV BatBox Auto", "Z", 1, 1, storageTable[batBox3.getBlockData()["id"]],
     batBox3.getBlockData()["Energy"])
 end
 function renderBB4()
