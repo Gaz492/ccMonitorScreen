@@ -1,14 +1,15 @@
 monitor = peripheral.wrap("top")
-batBox1 = peripheral.wrap("blockReader_4")
-batBox2 = peripheral.wrap("blockReader_5")
-batBox3 = peripheral.wrap("blockReader_0")
+-- batBox1 = peripheral.wrap("blockReader_4")
+-- batBox2 = peripheral.wrap("blockReader_5")
+-- batBox3 = peripheral.wrap("blockReader_0")
 -- batBox4 = peripheral.wrap("blockReader_3")
 
--- lavaTank = peripheral.wrap("blockReader_4")
-bioFuelTank = peripheral.wrap("blockReader_1")
+lavaTank = peripheral.wrap("dynamicValve_0")
+xpTank1 = peripheral.wrap("entangled:block_0")
+-- bioFuelTank = peripheral.wrap("blockReader_1")
 -- essenceTank = peripheral.wrap("blockReader_6")
 
-rsStorage = peripheral.wrap("rsBridge_1")
+rsStorage = peripheral.wrap("rsBridge_0")
 
 monBG = colors.gray
 winBG = colors.black
@@ -40,7 +41,9 @@ storageTable = {
     ["industrialforegoing:pity_black_hole_tank"] = 64000,
     ["industrialforegoing:simple_black_hole_tank"] = 1024000,
     ["industrialforegoing:advanced_black_hole_tank"] = 65536000,
-    ["industrialforegoing:supreme_black_hole_tank"] = 2147483647
+    ["industrialforegoing:supreme_black_hole_tank"] = 2147483647,
+    -- Other
+    ["experienceobelisk:cognitium"] = 65536000
 }
 
 function roundNum(val, decimal)
@@ -221,39 +224,49 @@ function shortenNum(n)
 end
 
 function renderLavaTank()
-    -- drawTank(tank1, "Lava Tank", 1, 1, colors.red, storageTable[lavaTank.getBlockData()["id"]],
-        -- lavaTank.getBlockData()["tank"].Amount)
+    tank1.setVisible(false)
+    drawTank(tank1, "Lava", 1, 1, colors.red, lavaTank.getTankCapacity(),
+        lavaTank.getStored()["amount"])
+    tank1.setVisible(true)
 end
-function renderBioFuelTank()
-        drawTank(tank2, "BioFuel", 1, 1, colors.purple, storageTable[bioFuelTank.getBlockData()["id"]],
-            bioFuelTank.getBlockData()["tank"].Amount)
+function renderXpTank()
+    tank2.setVisible(false)
+    drawTank(tank2, "Essence", 1, 1, colors.green, storageTable[xpTank1.tanks()[1]["name"]],
+        xpTank1.tanks()[1]["amount"])
+    tank2.setVisible(true)
 end
-function renderEssenceTank()
-    --     drawTank(tank3, "Essence Tank", 1, 1, colors.green, storageTable[essenceTank.getBlockData()["id"]],
-    --         essenceTank.getBlockData()["tank"].Amount)
-end
-function renderBB1()
-    drawEnergy(lvWindow, "EV BatBox S1", "Z", 1, 1, storageTable[batBox1.getBlockData()["id"]],
-        batBox1.getBlockData()["Energy"])
-end
-function renderBB2()
-        drawEnergy(mvWindow, "EV BatBox S2", "Z", 1, 1, storageTable[batBox2.getBlockData()["id"]],
-        batBox2.getBlockData()["Energy"])
-end
-function renderBB3()
-    drawEnergy(hvWindow, "EV BatBox Auto", "Z", 1, 1, storageTable[batBox3.getBlockData()["id"]],
-    batBox3.getBlockData()["Energy"])
-end
-function renderBB4()
-    --     drawEnergy(evWindow, "EV BatBox", "Z", 1, 1, storageTable[batBox4.getBlockData()["id"]],
-    --         batBox4.getBlockData()["Energy"])
-end
+-- function renderBioFuelTank()
+--         drawTank(tank2, "BioFuel", 1, 1, colors.purple, storageTable[bioFuelTank.getBlockData()["id"]],
+--             bioFuelTank.getBlockData()["tank"].Amount)
+-- end
+-- function renderEssenceTank()
+--     --     drawTank(tank3, "Essence Tank", 1, 1, colors.green, storageTable[essenceTank.getBlockData()["id"]],
+--     --         essenceTank.getBlockData()["tank"].Amount)
+-- end
+-- function renderBB1()
+--     drawEnergy(lvWindow, "EV BatBox S1", "Z", 1, 1, storageTable[batBox1.getBlockData()["id"]],
+--         batBox1.getBlockData()["Energy"])
+-- end
+-- function renderBB2()
+--         drawEnergy(mvWindow, "EV BatBox S2", "Z", 1, 1, storageTable[batBox2.getBlockData()["id"]],
+--         batBox2.getBlockData()["Energy"])
+-- end
+-- function renderBB3()
+--     drawEnergy(hvWindow, "EV BatBox Auto", "Z", 1, 1, storageTable[batBox3.getBlockData()["id"]],
+--     batBox3.getBlockData()["Energy"])
+-- end
+-- function renderBB4()
+--     --     drawEnergy(evWindow, "EV BatBox", "Z", 1, 1, storageTable[batBox4.getBlockData()["id"]],
+--     --         batBox4.getBlockData()["Energy"])
+-- end
 function renderStorage()
+    storageWindow.setVisible(false)
     drawStorageSpace(storageWindow, "RS Storage", 1, 1, rsStorage.getMaxItemDiskStorage(),
         tableLength(rsStorage.listItems()))
+    storageWindow.setVisible(true)
 end
 
 function tick()
-    parallel.waitForAll(renderLavaTank, renderBioFuelTank, renderEssenceTank, renderBB1, renderBB2, renderBB3, renderBB4,
-        renderStorage)
+    -- parallel.waitForAll(renderLavaTank, renderBioFuelTank, renderEssenceTank, renderBB1, renderBB2, renderBB3, renderBB4, renderStorage)
+    parallel.waitForAll(renderLavaTank, renderXpTank, renderStorage)
 end
