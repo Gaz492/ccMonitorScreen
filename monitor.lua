@@ -171,7 +171,7 @@ function drawStorageSpace(window, name, x, y, storageMax, storageCurrent)
         drawPixel(window, x + i, y + 4, colors.white)
     end
 
-    local currentRsStr = format_int(storageCurrent) .. " / " .. format_int(storageMax) .. " - " .. "Most popular item: " .. getTopStored(rsStorage.listItems()))
+    local currentRsStr = format_int(storageCurrent) .. " / " .. format_int(storageMax) .. " - " .. "Most popular item: " .. getTopStored(rsStorage.listItems())
 
     window.setCursorPos(x, y)
     window.setBackgroundColor(monBG)
