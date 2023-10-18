@@ -179,7 +179,7 @@ function drawStorageSpace(window, name, x, y, storageMax, storageCurrent)
     window.setTextColor(colors.white)
     window.write(name .. " " .. storagePercent .. "%")
     window.setCursorPos(x, y + 1)
-    if currentRsStr != prevRsString then
+    if currentRsStr ~= prevRsString then
         window.clearLine()
     end
     window.write(currentRsStr)
