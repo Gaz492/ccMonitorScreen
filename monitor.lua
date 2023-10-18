@@ -1,14 +1,14 @@
 monitor = peripheral.wrap("top")
--- batBox1 = peripheral.wrap("blockReader_4")
--- batBox2 = peripheral.wrap("blockReader_5")
--- batBox3 = peripheral.wrap("blockReader_0")
+batBox1 = peripheral.wrap("blockReader_4")
+batBox2 = peripheral.wrap("blockReader_5")
+batBox3 = peripheral.wrap("blockReader_0")
 -- batBox4 = peripheral.wrap("blockReader_3")
 
 -- lavaTank = peripheral.wrap("blockReader_4")
--- bioFuelTank = peripheral.wrap("blockReader_1")
+bioFuelTank = peripheral.wrap("blockReader_1")
 -- essenceTank = peripheral.wrap("blockReader_6")
 
-rsStorage = peripheral.wrap("rsBridge_0")
+rsStorage = peripheral.wrap("rsBridge_1")
 
 monBG = colors.gray
 winBG = colors.black
@@ -17,8 +17,6 @@ monitor.setBackgroundColor(monBG)
 monitor.clear()
 monX, monY = monitor.getSize()
 print("MonX: " .. monX .. ", MonY: " .. monY)
-
-local prevRsString = ""
 
 local tank1 = window.create(monitor, 7, 2, 15, 13)
 local tank2 = window.create(monitor, 29, 2, 15, 13)
@@ -171,20 +169,16 @@ function drawStorageSpace(window, name, x, y, storageMax, storageCurrent)
         drawPixel(window, x + i, y + 4, colors.white)
     end
 
-    local currentRsStr = format_int(storageCurrent) .. " / " .. format_int(storageMax) .. " - " .. "Most popular item: " .. getTopStored(rsStorage.listItems())
 
-    if currentRsStr ~= prevRsString then
-        window.setCursorPos(x, y)
-        window.setBackgroundColor(monBG)
-        window.clearLine()
-        window.setTextColor(colors.white)
-        window.write(name .. " " .. storagePercent .. "%")
-        window.setCursorPos(x, y + 1)
-        window.clearLine()
-        window.write(currentRsStr)
-        window.setBackgroundColor(winBG)
-    end
-
+    window.setCursorPos(x, y)
+    window.setBackgroundColor(monBG)
+    window.clearLine()
+    window.setTextColor(colors.white)
+    window.write(name .. " " .. storagePercent .. "%")
+    window.setCursorPos(x, y + 1)
+    window.clearLine()
+    window.write(format_int(storageCurrent) .. " / " .. format_int(storageMax) .. " - " .. "Most popular item: " .. getTopStored(rsStorage.listItems()))
+    window.setBackgroundColor(winBG)
 end
 
 function tableLength(T)
@@ -260,6 +254,6 @@ function renderStorage()
 end
 
 function tick()
-    -- parallel.waitForAll(renderLavaTank, renderBioFuelTank, renderEssenceTank, renderBB1, renderBB2, renderBB3, renderBB4, renderStorage)
-    parallel.waitForAll(renderStorage)
+    parallel.waitForAll(renderLavaTank, renderBioFuelTank, renderEssenceTank, renderBB1, renderBB2, renderBB3, renderBB4,
+        renderStorage)
 end
