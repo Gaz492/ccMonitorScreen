@@ -173,17 +173,17 @@ function drawStorageSpace(window, name, x, y, storageMax, storageCurrent)
 
     local currentRsStr = format_int(storageCurrent) .. " / " .. format_int(storageMax) .. " - " .. "Most popular item: " .. getTopStored(rsStorage.listItems())
 
-    window.setCursorPos(x, y)
-    window.setBackgroundColor(monBG)
-    window.clearLine()
-    window.setTextColor(colors.white)
-    window.write(name .. " " .. storagePercent .. "%")
-    window.setCursorPos(x, y + 1)
     if currentRsStr ~= prevRsString then
+        window.setCursorPos(x, y)
+        window.setBackgroundColor(monBG)
         window.clearLine()
+        window.setTextColor(colors.white)
+        window.write(name .. " " .. storagePercent .. "%")
+        window.setCursorPos(x, y + 1)
+        window.clearLine()
+        window.write(currentRsStr)
+        window.setBackgroundColor(winBG)
     end
-    window.write(currentRsStr)
-    window.setBackgroundColor(winBG)
 
 end
 
