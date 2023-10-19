@@ -243,7 +243,9 @@ end
 --     --         essenceTank.getBlockData()["tank"].Amount)
 -- end
 function renderPower1()
+    lvWindow.setVisible(false)
     drawEnergy(lvWindow, "Cell 1", "RF", 1, 1, rftPower1.getEnergyCapacity(), rftPower1.getEnergy())
+    lvWindow.setVisible(true)
 end
 -- function renderBB2()
 --         drawEnergy(mvWindow, "EV BatBox S2", "Z", 1, 1, storageTable[batBox2.getBlockData()["id"]],
