@@ -235,7 +235,7 @@ function renderFluidTank2()
 end
 function renderFluidTank3()
     tank2.setVisible(false)
-    drawTank(tank3, "BioFuel", 1, 1, colors.green, fluidTank3.getTankCapacity(), fluidTank3.getStored()["amount"])
+    drawTank(tank3, "BioFuel", 1, 1, colors.purple, fluidTank3.getTankCapacity(), fluidTank3.getStored()["amount"])
     tank2.setVisible(true)
 end
 
@@ -269,8 +269,9 @@ end
 function tick()
     -- parallel.waitForAll(renderLavaTank, renderBioFuelTank, renderEssenceTank, renderBB1, renderBB2, renderBB3, renderBB4, renderStorage)
     parallel.waitForAll(
-        renderLavaTank,
-        renderXpTank,
+        renderFluidTank1,
+        renderFluidTank2,
+        renderFluidTank3,
         renderPower1,
         renderStorage
     )
