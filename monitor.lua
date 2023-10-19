@@ -162,50 +162,50 @@ function drawStorageSpace(window, name, x, y, storageMax, storageCurrent)
 end
 
 -- TANKS
-function renderFluidTank1()
+local function renderFluidTank1()
     tank1.setVisible(false)
     drawTank(tank1, "Lava", 1, 1, colors.red, fluidTank1.getTankCapacity(),
         fluidTank1.getStored()["amount"])
     tank1.setVisible(true)
 end
-function renderFluidTank2()
+local function renderFluidTank2()
     tank2.setVisible(false)
     drawTank(tank2, "Essence", 1, 1, colors.green, fluidTank2.getTankCapacity(), fluidTank2.getStored()["amount"])
     tank2.setVisible(true)
 end
-function renderFluidTank3()
+local function renderFluidTank3()
     tank2.setVisible(false)
     drawTank(tank3, "BioFuel", 1, 1, colors.purple, fluidTank3.getTankCapacity(), fluidTank3.getStored()["amount"])
     tank2.setVisible(true)
 end
 
 -- POWER
-function renderPower1()
+local function renderPower1()
     powerWindow1.setVisible(false)
     drawEnergy(powerWindow1, "Cell 1", "RF", 1, 1, rftPower1.getEnergyCapacity(), rftPower1.getEnergy())
     powerWindow1.setVisible(true)
 end
 
-function renderPower2()
+local function renderPower2()
     powerWindow2.setVisible(false)
     drawEnergy(powerWindow2, "RS", "RF", 1, 1, rsStorage.getMaxEnergyStorage(), rsStorage.getEnergyStorage(), rsStorage.getEnergyUsage())
     powerWindow2.setVisible(true)
 end
--- function renderBB2()
+-- local function renderBB2()
 --         drawEnergy(mvWindow, "EV BatBox S2", "Z", 1, 1, storageTable[batBox2.getBlockData()["id"]],
 --         batBox2.getBlockData()["Energy"])
 -- end
--- function renderBB3()
+-- local function renderBB3()
 --     drawEnergy(hvWindow, "EV BatBox Auto", "Z", 1, 1, storageTable[batBox3.getBlockData()["id"]],
 --     batBox3.getBlockData()["Energy"])
 -- end
--- function renderBB4()
+-- local function renderBB4()
 --     --     drawEnergy(evWindow, "EV BatBox", "Z", 1, 1, storageTable[batBox4.getBlockData()["id"]],
 --     --         batBox4.getBlockData()["Energy"])
 -- end
 
 -- STORAGE
-function renderStorage()
+local function renderStorage()
     storageWindow.setVisible(false)
     drawStorageSpace(storageWindow, "RS Storage", 1, 1, rsStorage.getMaxItemDiskStorage() + rsStorage.getMaxItemExternalStorage(),
         tableLength(rsStorage.listItems()))
