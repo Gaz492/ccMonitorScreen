@@ -1,11 +1,8 @@
 monitor = peripheral.wrap("top")
--- batBox1 = peripheral.wrap("blockReader_4")
--- batBox2 = peripheral.wrap("blockReader_5")
--- batBox3 = peripheral.wrap("blockReader_0")
--- batBox4 = peripheral.wrap("blockReader_3")
+rftPower1 = peripheral.wrap("rftoolspower:cell3_0")
 
 lavaTank = peripheral.wrap("dynamicValve_0")
-xpTank1 = peripheral.wrap("entangled:block_0")
+xpTank1 = peripheral.wrap("dynamicValve_1")
 -- bioFuelTank = peripheral.wrap("blockReader_1")
 -- essenceTank = peripheral.wrap("blockReader_6")
 
@@ -151,7 +148,7 @@ function drawEnergy(window, name, unit, x, y, energyMax, energyCurrent)
     window.write(name .. " " .. energyPercent .. "%")
     window.setCursorPos(x, y + 1)
     window.clearLine()
-    window.write(format_int(roundNum(energyCurrent)) .. unit .. " / " .. format_int(roundNum(energyMax)) .. unit)
+    window.write(tostring(shortenNum(roundNum(energyCurrent))) .. unit .. " / " .. tostring(shortenNum(roundNum(energyMax))) .. unit)
     window.setBackgroundColor(winBG)
 end
 
@@ -214,7 +211,9 @@ function format_int(number)
 end
 
 function shortenNum(n)
-    if n >= 10 ^ 6 then
+    if n >= 10 ^ 9 then
+        return string.format("%.2fG", n / 10 ^ 9)
+    elseif n >= 10 ^ 6 then
         return string.format("%.2fM", n / 10 ^ 6)
     elseif n >= 10 ^ 3 then
         return string.format("%.2fK", n / 10 ^ 3)
@@ -231,8 +230,8 @@ function renderLavaTank()
 end
 function renderXpTank()
     tank2.setVisible(false)
-    drawTank(tank2, "Essence", 1, 1, colors.green, storageTable[xpTank1.tanks()[1]["name"]],
-        xpTank1.tanks()[1]["amount"])
+    drawTank(tank2, "Essence", 1, 1, colors.green, xpTank1.getTankCapacity(),
+    xpTank1.getStored()["amount"])
     tank2.setVisible(true)
 end
 -- function renderBioFuelTank()
@@ -243,10 +242,9 @@ end
 --     --     drawTank(tank3, "Essence Tank", 1, 1, colors.green, storageTable[essenceTank.getBlockData()["id"]],
 --     --         essenceTank.getBlockData()["tank"].Amount)
 -- end
--- function renderBB1()
---     drawEnergy(lvWindow, "EV BatBox S1", "Z", 1, 1, storageTable[batBox1.getBlockData()["id"]],
---         batBox1.getBlockData()["Energy"])
--- end
+function renderPower1()
+    drawEnergy(lvWindow, "Cell 1", "RF", 1, 1, rftPower1.getEnergyCapacity(), rftPower1.getEnergy())
+end
 -- function renderBB2()
 --         drawEnergy(mvWindow, "EV BatBox S2", "Z", 1, 1, storageTable[batBox2.getBlockData()["id"]],
 --         batBox2.getBlockData()["Energy"])
@@ -268,5 +266,10 @@ end
 
 function tick()
     -- parallel.waitForAll(renderLavaTank, renderBioFuelTank, renderEssenceTank, renderBB1, renderBB2, renderBB3, renderBB4, renderStorage)
-    parallel.waitForAll(renderLavaTank, renderXpTank, renderStorage)
+    parallel.waitForAll(
+        renderLavaTank,
+        renderXpTank,
+        renderPower1,
+        renderStorage
+    )
 end
