@@ -1,4 +1,4 @@
-local monitorTop = peripheral.wrap("top")
+local monitor = peripheral.wrap("top")
 local rftPower1 = peripheral.wrap("rftoolspower:cell3_0")
 
 local fluidTank1 = peripheral.wrap("dynamicValve_0") -- Lava
@@ -12,21 +12,21 @@ require("utils")
 local monBG = colors.gray
 local winBG = colors.black
 
-monitorTop.setBackgroundColor(monBG)
-monitorTop.clear()
-local monX, monY = monitorTop.getSize()
-print("MonX: " .. monX .. ", MonY: " .. monY)
+monitor.setBackgroundColor(monBG)
+monitor.clear()
+local monX, monY = monitor.getSize()
+print("Center MonX: " .. monX .. ", MonY: " .. monY)
 
-local tank1 = window.create(monitorTop, 7, 2, 15, 13)
-local tank2 = window.create(monitorTop, 29, 2, 15, 13)
-local tank3 = window.create(monitorTop, 52, 2, 15, 13)
+local tank1 = window.create(monitor, 7, 2, 15, 13)
+local tank2 = window.create(monitor, 29, 2, 15, 13)
+local tank3 = window.create(monitor, 52, 2, 15, 13)
 
-local powerWindow1 = window.create(monitorTop, 6, 16, 28, 5)
-local powerWindow2 = window.create(monitorTop, 39, 16, 28, 5)
-local powerWindow3 = window.create(monitorTop, 6, 22, 28, 5)
-local powerWindow4 = window.create(monitorTop, 39, 22, 28, 5)
+local powerWindow1 = window.create(monitor, 6, 16, 28, 5)
+local powerWindow2 = window.create(monitor, 39, 16, 28, 5)
+local powerWindow3 = window.create(monitor, 6, 22, 28, 5)
+local powerWindow4 = window.create(monitor, 39, 22, 28, 5)
 
-local storageWindow = window.create(monitorTop, 6, 28, 61, 5)
+local storageWindow = window.create(monitor, 6, 28, 61, 5)
 
 function drawTank(window, tankName, x, y, color, maxLiq, currentLiq)
     window.setBackgroundColor(winBG)

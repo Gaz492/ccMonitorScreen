@@ -68,3 +68,9 @@ function drawPixel(window, x, y, color)
     window.setBackgroundColor(color)
     window.write(" ")
 end
+
+function centerText(window, text, yPos)
+    local x,y = window.getSize()
+    window.setCursorPos(math.ceil((x / 2) - (text:len() / 2)), yPos)
+    window.write(text)
+end
