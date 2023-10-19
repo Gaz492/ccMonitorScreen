@@ -1,60 +1,32 @@
-monitor = peripheral.wrap("top")
-rftPower1 = peripheral.wrap("rftoolspower:cell3_0")
+local monitorTop = peripheral.wrap("top")
+local rftPower1 = peripheral.wrap("rftoolspower:cell3_0")
 
-fluidTank1 = peripheral.wrap("dynamicValve_0") -- Lava
-fluidTank2 = peripheral.wrap("dynamicValve_1") -- XP
-fluidTank3 = peripheral.wrap("dynamicValve_3") -- ??????
+local fluidTank1 = peripheral.wrap("dynamicValve_0") -- Lava
+local fluidTank2 = peripheral.wrap("dynamicValve_1") -- XP
+local fluidTank3 = peripheral.wrap("dynamicValve_3") -- ??????
 
-rsStorage = peripheral.wrap("rsBridge_0")
+local rsStorage = peripheral.wrap("rsBridge_0")
 
-monBG = colors.gray
-winBG = colors.black
+require("utils")
 
-monitor.setBackgroundColor(monBG)
-monitor.clear()
-monX, monY = monitor.getSize()
+local monBG = colors.gray
+local winBG = colors.black
+
+monitorTop.setBackgroundColor(monBG)
+monitorTop.clear()
+local monX, monY = monitorTop.getSize()
 print("MonX: " .. monX .. ", MonY: " .. monY)
 
-local tank1 = window.create(monitor, 7, 2, 15, 13)
-local tank2 = window.create(monitor, 29, 2, 15, 13)
-local tank3 = window.create(monitor, 52, 2, 15, 13)
+local tank1 = window.create(monitorTop, 7, 2, 15, 13)
+local tank2 = window.create(monitorTop, 29, 2, 15, 13)
+local tank3 = window.create(monitorTop, 52, 2, 15, 13)
 
-local lvWindow = window.create(monitor, 6, 16, 28, 5)
-local mvWindow = window.create(monitor, 39, 16, 28, 5)
-local hvWindow = window.create(monitor, 6, 22, 28, 5)
-local evWindow = window.create(monitor, 39, 22, 28, 5)
+local powerWindow1 = window.create(monitorTop, 6, 16, 28, 5)
+local powerWindow2 = window.create(monitorTop, 39, 16, 28, 5)
+local powerWindow3 = window.create(monitorTop, 6, 22, 28, 5)
+local powerWindow4 = window.create(monitorTop, 39, 22, 28, 5)
 
-local storageWindow = window.create(monitor, 6, 28, 61, 5)
-
-storageTable = {
-    -- FTB:IC Energy Storage
-    ["ftbic:lv_battery_box"] = 40000,
-    ["ftbic:mv_battery_box"] = 400000,
-    ["ftbic:hv_battery_box"] = 4000000,
-    ["ftbic:ev_battery_box"] = 40000000,
-    -- Tanks
-    ["industrialforegoing:common_black_hole_tank"] = 16000,
-    ["industrialforegoing:pity_black_hole_tank"] = 64000,
-    ["industrialforegoing:simple_black_hole_tank"] = 1024000,
-    ["industrialforegoing:advanced_black_hole_tank"] = 65536000,
-    ["industrialforegoing:supreme_black_hole_tank"] = 2147483647,
-    -- Other
-    ["experienceobelisk:cognitium"] = 65536000
-}
-
-function roundNum(val, decimal)
-    if (decimal) then
-        return math.floor(((val * 10 ^ decimal) + 0.5) / (10 ^ decimal))
-    else
-        return math.floor(val + 0.5)
-    end
-end
-
-function drawPixel(window, x, y, color)
-    window.setCursorPos(x, y)
-    window.setBackgroundColor(color)
-    window.write(" ")
-end
+local storageWindow = window.create(monitorTop, 6, 28, 61, 5)
 
 function drawTank(window, tankName, x, y, color, maxLiq, currentLiq)
     window.setBackgroundColor(winBG)
@@ -124,7 +96,7 @@ function drawTank(window, tankName, x, y, color, maxLiq, currentLiq)
     window.write(tostring(shortenNum(currentLiq)) .. "/" .. tostring(shortenNum(maxLiq)) .. "")
 end
 
-function drawEnergy(window, name, unit, x, y, energyMax, energyCurrent)
+function drawEnergy(window, name, unit, x, y, energyMax, energyCurrent, energyUsage)
     window.setBackgroundColor(winBG)
     window.clear()
     energyPercent = roundNum(((energyCurrent / energyMax) * 100), 0)
@@ -142,6 +114,13 @@ function drawEnergy(window, name, unit, x, y, energyMax, energyCurrent)
         drawPixel(window, x + 1 + i, y + 3, colors.red)
     end
 
+    local energryString = ""
+    if energyUsage ~= nil then
+        energryString = tostring(shortenNum(roundNum(energyCurrent))) .. unit .. "/" .. tostring(shortenNum(roundNum(energyMax))) .. unit .. "|" .. tostring(shortenNum(energyUsage))
+    else
+        energryString = tostring(shortenNum(roundNum(energyCurrent))) .. unit .. "/" .. tostring(shortenNum(roundNum(energyMax))) .. unit
+    end
+
     window.setCursorPos(x, y)
     window.setBackgroundColor(monBG)
     window.clearLine()
@@ -149,7 +128,7 @@ function drawEnergy(window, name, unit, x, y, energyMax, energyCurrent)
     window.write(name .. " " .. energyPercent .. "%")
     window.setCursorPos(x, y + 1)
     window.clearLine()
-    window.write(tostring(shortenNum(roundNum(energyCurrent))) .. unit .. " / " .. tostring(shortenNum(roundNum(energyMax))) .. unit)
+    window.write(energryString)
     window.setBackgroundColor(winBG)
 end
 
@@ -178,49 +157,8 @@ function drawStorageSpace(window, name, x, y, storageMax, storageCurrent)
     window.write(name .. " " .. storagePercent .. "%")
     window.setCursorPos(x, y + 1)
     window.clearLine()
-    window.write(format_int(storageCurrent) .. " / " .. format_int(storageMax) .. " - " .. "Most popular item: " .. getTopStored(rsStorage.listItems()))
+    window.write(tostring(shortenNum(storageCurrent)) .. " / " .. tostring(shortenNum(storageMax)) .. " - " .. "Most popular item: " .. getTopStored(rsStorage.listItems()))
     window.setBackgroundColor(winBG)
-end
-
-function tableLength(T)
-    local count = 0
-    for _, v in pairs(T) do
-        count = count + v["amount"]
-    end
-    return count
-end
-
-function getTopStored(T)
-    length = tableLength(T)
-    if length > 0 then
-        table.sort(T, function(a, b)
-            return a.amount > b.amount
-        end)
-        return T[1].displayName
-    end
-    return "null"
-end
-
-function format_int(number)
-
-    local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
-    -- reverse the int-string and append a comma to all blocks of 3 digits
-    int = int:reverse():gsub("(%d%d%d)", "%1,")
-    -- reverse the int-string back remove an optional comma and put the 
-    -- optional minus and fractional part back
-    return minus .. int:reverse():gsub("^,", "") .. fraction
-end
-
-function shortenNum(n)
-    if n >= 10 ^ 9 then
-        return string.format("%.2fG", n / 10 ^ 9)
-    elseif n >= 10 ^ 6 then
-        return string.format("%.2fM", n / 10 ^ 6)
-    elseif n >= 10 ^ 3 then
-        return string.format("%.2fK", n / 10 ^ 3)
-    else
-        return tostring(n)
-    end
 end
 
 -- TANKS
@@ -243,9 +181,15 @@ end
 
 -- POWER
 function renderPower1()
-    lvWindow.setVisible(false)
-    drawEnergy(lvWindow, "Cell 1", "RF", 1, 1, rftPower1.getEnergyCapacity(), rftPower1.getEnergy())
-    lvWindow.setVisible(true)
+    powerWindow1.setVisible(false)
+    drawEnergy(powerWindow1, "Cell 1", "RF", 1, 1, rftPower1.getEnergyCapacity(), rftPower1.getEnergy())
+    powerWindow1.setVisible(true)
+end
+
+function renderPower2()
+    powerWindow2.setVisible(false)
+    drawEnergy(powerWindow2, "RS", "RF", 1, 1, rsStorage.getMaxEnergyStorage(), rsStorage.getEnergyStorage(), rsStorage.getEnergyUsage())
+    powerWindow2.setVisible(true)
 end
 -- function renderBB2()
 --         drawEnergy(mvWindow, "EV BatBox S2", "Z", 1, 1, storageTable[batBox2.getBlockData()["id"]],
@@ -263,18 +207,19 @@ end
 -- STORAGE
 function renderStorage()
     storageWindow.setVisible(false)
-    drawStorageSpace(storageWindow, "RS Storage", 1, 1, rsStorage.getMaxItemDiskStorage(),
+    drawStorageSpace(storageWindow, "RS Storage", 1, 1, rsStorage.getMaxItemDiskStorage() + rsStorage.getMaxItemExternalStorage(),
         tableLength(rsStorage.listItems()))
     storageWindow.setVisible(true)
 end
 
-function tick()
+function mainTick()
     -- parallel.waitForAll(renderLavaTank, renderBioFuelTank, renderEssenceTank, renderBB1, renderBB2, renderBB3, renderBB4, renderStorage)
     parallel.waitForAll(
         renderFluidTank1,
         renderFluidTank2,
         renderFluidTank3,
         renderPower1,
+        renderPower2,
         renderStorage
     )
 end

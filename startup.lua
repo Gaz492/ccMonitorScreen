@@ -60,8 +60,21 @@ while true do
             print("Failed to find script")
             break
         end
+        -- Optional left/right screen
+        if fs.exists("leftMonitor.lua") then
+            require("leftMonitor")
+        end
+        if fs.exists("rightMonitor.lua") then
+            require("rightMonitor")
+        end
     end
-    tick()
+    mainTick()
+    if fs.exists("leftMonitor.lua") then
+        leftTick()
+    end
+    if fs.exists("rightMonitor.lua") then
+       rightTick()
+    end
 
     -- debug
     -- hasUpdated = checkVersion()
