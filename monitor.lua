@@ -97,22 +97,26 @@ function drawTank(window, tankName, x, y, color, maxLiq, currentLiq)
 end
 
 function drawEnergy(window, name, unit, x, y, energyMax, energyCurrent, energyUsage)
+    winX, winY = window.getSize()
     window.setBackgroundColor(winBG)
     window.clear()
     energyPercent = roundNum(((energyCurrent / energyMax) * 100), 0)
-    energyCols = roundNum((energyPercent / (10 / 2.5)), 0)
+    
+    energyCols = roundNum((energyPercent * (winX - 3) / 100), 0)
 
-    drawPixel(window, x, y + 3, colors.white)
-    drawPixel(window, x + 27, y + 3, colors.white)
+    drawProgressBar(window, x, y, energyCols)
 
-    for i = 0, 27 do
-        drawPixel(window, x + i, y + 2, colors.white)
-        drawPixel(window, x + i, y + 4, colors.white)
-    end
+    -- drawPixel(window, x, y + 3, colors.white)
+    -- drawPixel(window, x + 27, y + 3, colors.white)
 
-    for i = 0, energyCols do
-        drawPixel(window, x + 1 + i, y + 3, colors.red)
-    end
+    -- for i = 0, 27 do
+    --     drawPixel(window, x + i, y + 2, colors.white)
+    --     drawPixel(window, x + i, y + 4, colors.white)
+    -- end
+
+    -- for i = 0, energyCols do
+    --     drawPixel(window, x + 1 + i, y + 3, colors.red)
+    -- end
 
     local energryString = ""
     if energyUsage ~= nil then
@@ -133,22 +137,13 @@ function drawEnergy(window, name, unit, x, y, energyMax, energyCurrent, energyUs
 end
 
 function drawStorageSpace(window, name, x, y, storageMax, storageCurrent)
+    winX, winY = window.getSize()
     window.setBackgroundColor(winBG)
     window.clear()
     storagePercent = roundNum(((storageCurrent / storageMax) * 100), 0)
-    storageCols = roundNum((storagePercent / (10 / 5.8)), 0)
+    storageCols = roundNum((storagePercent * (winX - 3) / 100), 0)
     
-    for i = 0, storageCols do
-        drawPixel(window, x + 1 + i, y + 3, colors.red)
-    end
-    drawPixel(window, x, y + 3, colors.white)
-    drawPixel(window, x + 60, y + 3, colors.white)
-
-    for i = 0, 68 do
-        drawPixel(window, x + i, y + 2, colors.white)
-        drawPixel(window, x + i, y + 4, colors.white)
-    end
-
+    drawProgressBar(window, x, y, storageCols)
 
     window.setCursorPos(x, y)
     window.setBackgroundColor(monBG)
@@ -164,8 +159,7 @@ end
 -- TANKS
 local function renderFluidTank1()
     tank1.setVisible(false)
-    drawTank(tank1, "Lava", 1, 1, colors.red, fluidTank1.getTankCapacity(),
-        fluidTank1.getStored()["amount"])
+    drawTank(tank1, "Lava", 1, 1, colors.red, fluidTank1.getTankCapacity(), fluidTank1.getStored()["amount"])
     tank1.setVisible(true)
 end
 local function renderFluidTank2()
@@ -207,8 +201,7 @@ end
 -- STORAGE
 local function renderStorage()
     storageWindow.setVisible(false)
-    drawStorageSpace(storageWindow, "RS Storage", 1, 1, rsStorage.getMaxItemDiskStorage() + rsStorage.getMaxItemExternalStorage(),
-        tableLength(rsStorage.listItems()))
+    drawStorageSpace(storageWindow, "RS Storage", 1, 1, rsStorage.getMaxItemDiskStorage() + rsStorage.getMaxItemExternalStorage(), tableLength(rsStorage.listItems()))
     storageWindow.setVisible(true)
 end
 

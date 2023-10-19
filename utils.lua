@@ -69,6 +69,27 @@ function drawPixel(window, x, y, color)
     window.write(" ")
 end
 
+function drawProgressBar(window, x, y, value, barColour, borderColour)
+    winX, winY = window.getSize()
+    if barColour == nil then
+        barColour = colors.red
+    end
+    if borderColour == nil then
+        borderColour = colors.white
+    end
+
+    for i = 0, value do
+        drawPixel(window, x + 1 + i, y + 3, barColour)
+    end
+    drawPixel(window, x, y + 3, borderColour)
+    drawPixel(window, winX, y + 3, borderColour)
+
+    for i = 0, winX - 1 do
+        drawPixel(window, x + i, y + 2, borderColour)
+        drawPixel(window, x + i, y + 4, borderColour)
+    end
+end
+
 function centerText(window, text, yPos)
     local x,y = window.getSize()
     window.setCursorPos(math.ceil((x / 2) - (text:len() / 2)), yPos)
