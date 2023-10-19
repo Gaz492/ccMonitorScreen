@@ -1,10 +1,9 @@
 monitor = peripheral.wrap("top")
 rftPower1 = peripheral.wrap("rftoolspower:cell3_0")
 
-lavaTank = peripheral.wrap("dynamicValve_0")
-xpTank1 = peripheral.wrap("dynamicValve_1")
--- bioFuelTank = peripheral.wrap("blockReader_1")
--- essenceTank = peripheral.wrap("blockReader_6")
+fluidTank1 = peripheral.wrap("dynamicValve_0") -- Lava
+fluidTank2 = peripheral.wrap("dynamicValve_1") -- XP
+fluidTank3 = peripheral.wrap("dynamicValve_3") -- ??????
 
 rsStorage = peripheral.wrap("rsBridge_0")
 
@@ -222,26 +221,25 @@ function shortenNum(n)
     end
 end
 
-function renderLavaTank()
+-- TANKS
+function renderFluidTank1()
     tank1.setVisible(false)
-    drawTank(tank1, "Lava", 1, 1, colors.red, lavaTank.getTankCapacity(),
-        lavaTank.getStored()["amount"])
+    drawTank(tank1, "Lava", 1, 1, colors.red, fluidTank1.getTankCapacity(),
+        fluidTank1.getStored()["amount"])
     tank1.setVisible(true)
 end
-function renderXpTank()
+function renderFluidTank2()
     tank2.setVisible(false)
-    drawTank(tank2, "Essence", 1, 1, colors.green, xpTank1.getTankCapacity(),
-    xpTank1.getStored()["amount"])
+    drawTank(tank2, "Essence", 1, 1, colors.green, fluidTank2.getTankCapacity(), fluidTank2.getStored()["amount"])
     tank2.setVisible(true)
 end
--- function renderBioFuelTank()
---         drawTank(tank2, "BioFuel", 1, 1, colors.purple, storageTable[bioFuelTank.getBlockData()["id"]],
---             bioFuelTank.getBlockData()["tank"].Amount)
--- end
--- function renderEssenceTank()
---     --     drawTank(tank3, "Essence Tank", 1, 1, colors.green, storageTable[essenceTank.getBlockData()["id"]],
---     --         essenceTank.getBlockData()["tank"].Amount)
--- end
+function renderFluidTank3()
+    tank2.setVisible(false)
+    drawTank(tank3, "BioFuel", 1, 1, colors.green, fluidTank3.getTankCapacity(), fluidTank3.getStored()["amount"])
+    tank2.setVisible(true)
+end
+
+-- POWER
 function renderPower1()
     lvWindow.setVisible(false)
     drawEnergy(lvWindow, "Cell 1", "RF", 1, 1, rftPower1.getEnergyCapacity(), rftPower1.getEnergy())
@@ -259,6 +257,8 @@ end
 --     --     drawEnergy(evWindow, "EV BatBox", "Z", 1, 1, storageTable[batBox4.getBlockData()["id"]],
 --     --         batBox4.getBlockData()["Energy"])
 -- end
+
+-- STORAGE
 function renderStorage()
     storageWindow.setVisible(false)
     drawStorageSpace(storageWindow, "RS Storage", 1, 1, rsStorage.getMaxItemDiskStorage(),
