@@ -80,32 +80,34 @@ function drawTank(window, tankName, x, y, color, maxLiq, currentLiq)
 
     rows = roundNum((percentage / 13), 0)
 
-    for i = 8 - rows, 8 do
-        for j = 1, 13 do
-            if tankName == "Lava" then
-                if math.random(1, 20 - i) == 1 then
-                    if math.random(1, 4) == 1 then
-                        drawPixel(window, x + j, y + i, colors.black)
+    if percentage ~= 0 then
+        for i = 8 - rows, 8 do
+            for j = 1, 13 do
+                if tankName == "Lava" then
+                    if math.random(1, 20 - i) == 1 then
+                        if math.random(1, 4) == 1 then
+                            drawPixel(window, x + j, y + i, colors.black)
+                        else
+                            drawPixel(window, x + j, y + i, colors.orange)
+                        end
                     else
-                        drawPixel(window, x + j, y + i, colors.orange)
+                        drawPixel(window, x + j, y + i, color)
+                    end
+                elseif tankName == "BioFuel" then
+                    if math.random(1, 20 - i) == 1 then
+                        drawPixel(window, x + j, y + i, colors.magenta)
+                    else
+                        drawPixel(window, x + j, y + i, color)
+                    end
+                elseif tankName == "Essence" then
+                    if math.random(1, 20 - i) == 1 then
+                        drawPixel(window, x + j, y + i, colors.lime)
+                    else
+                        drawPixel(window, x + j, y + i, color)
                     end
                 else
                     drawPixel(window, x + j, y + i, color)
                 end
-            elseif tankName == "BioFuel" then
-                if math.random(1, 20 - i) == 1 then
-                    drawPixel(window, x + j, y + i, colors.magenta)
-                else
-                    drawPixel(window, x + j, y + i, color)
-                end
-            elseif tankName == "Essence" then
-                if math.random(1, 20 - i) == 1 then
-                    drawPixel(window, x + j, y + i, colors.lime)
-                else
-                    drawPixel(window, x + j, y + i, color)
-                end
-            else
-                drawPixel(window, x + j, y + i, color)
             end
         end
     end
